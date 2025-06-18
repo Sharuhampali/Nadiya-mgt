@@ -152,7 +152,12 @@
     <ul class="link-list">
       <li><a href="/gantt"><i class="fa fa-bar-chart"></i> Gantt Chart Tool (GTC)</a></li>
       <li><a href="/display"><i class="fa fa-tasks"></i> Project Material Tracker (PMT)</a></li>
-      <li><a href="/output"><i class="fa fa-line-chart"></i> Project Progress Tracker (PPT)</a></li>
+      <li> <a href="{% if user.type in ['FAS1', 'FAS2'] %}/outputfas1
+          {% elif user.type in ['FAS+PA1', 'FAS+PA2'] %}/outputfas3
+          {% elif user.type in ['FAS+PA+TWTB1', 'FAS+PA+TWTB2'] %}/output
+          {% else %}#{% endif %}" 
+    class="btn btn-outline-secondary btn-block py-5"
+  ></li>
 
     </ul>
   </div>

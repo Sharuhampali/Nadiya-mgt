@@ -11,9 +11,10 @@ views = Blueprint('views', __name__)
 @views.route('/')
 @login_required
 def main():
+    user = current_user
     email = current_user.email
     if current_user.rid == 'team':
-        return render_template('home.html', email = email)
+        return render_template('home.html', email = email, user = user)
     else:
          return render_template('no.html', email = email)
 
@@ -283,6 +284,9 @@ def output():
 
 
     planned = db.session.query(Planned).filter(Planned.user_id == current_user.id).first()
+    if not planned or planned.cable_planned is None:
+        flash("Please enter the form details before viewing the report.", "warning")
+        return redirect(url_for("views.main")) 
 
     contact = db.session.query(Contact).filter(Contact.user_id == current_user.id).first()
     products = Product.query.filter_by(user_id=current_user.id).all()
@@ -1041,6 +1045,9 @@ def outputfas1():
 
 
     planned = db.session.query(Planned).filter(Planned.user_id == current_user.id).first()
+    if not planned or planned.cable_planned is None:
+        flash("Please enter the form details before viewing the report.", "warning")
+        return redirect(url_for("views.main")) 
     contact = db.session.query(Contact).filter(Contact.user_id == current_user.id).first()
     products = Product.query.filter_by(user_id=current_user.id).all()
     infos = db.session.query(Info).filter(Info.user_id == current_user.id).all()
@@ -1143,6 +1150,9 @@ def outputfas3():
 
 
     planned = db.session.query(Planned).filter(Planned.user_id == current_user.id).first()
+    if not planned or planned.cable_planned is None:
+        flash("Please enter the form details before viewing the report.", "warning")
+        return redirect(url_for("views.main")) 
     contact = db.session.query(Contact).filter(Contact.user_id == current_user.id).first()
     products = Product.query.filter_by(user_id=current_user.id).all()
     infos = db.session.query(Info).filter(Info.user_id == current_user.id).all()

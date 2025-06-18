@@ -147,7 +147,18 @@
   <div class="header">
     <h1>{{ email }}</h1>
   </div>
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
  <div class="container">
   <div class="row mb-4">
     <div class="col-12">
@@ -172,10 +183,16 @@
       </a>
     </div>
     <div class="col-md-6 mb-3">
-      <a href="/output" class="btn btn-outline-secondary btn-block py-5">
+       <a 
+    href="{% if user.p_type in ['FAS1', 'FAS2'] %}/outputfas1
+          {% elif user.p_type in ['FAS+PA1', 'FAS+PA2'] %}/outputfas3
+          {% elif user.p_type in ['FAS+PA+TWTB1', 'FAS+PA+TWTB2'] %}/output
+         {%endif %}" 
+    class="btn btn-outline-secondary btn-block py-5"
+  >
         <i class="fa fa-file-text-o mr-2"></i>PPT - Report
       </a>
-    </div>
+    </div> 
 
     <!-- Group 3: MR -->
     <div class="col-md-6 mb-3">
