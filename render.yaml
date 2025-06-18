@@ -5,7 +5,7 @@ services:
     runtime: docker
     plan: free
     branch: main
-    repo: 
+    repo: https://github.com/Sharuhampali/Nadiya-mgt.git
     dockerContext: .
     dockerfilePath: Dockerfile
     envVars:
