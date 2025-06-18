@@ -1,0 +1,16 @@
+# render.yaml — Tells Render how to build and run your service
+services:
+  - type: web
+    name: mgt-app
+    runtime: docker
+    plan: free
+    branch: main
+    repo: 
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false  # Add this manually in the Render dashboard for security
+    autoDeploy: true
