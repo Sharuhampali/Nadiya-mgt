@@ -1,169 +1,326 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nadiya</title>
-  <link rel="icon" type="image/png" href="{{url_for('static',filename='logo.png')}}">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects - Nadiya</title>
+    <link rel="icon" type="image/png" href="{{url_for('static',filename='logo.png')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous" />
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --accent-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    crossorigin="anonymous"
-  />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
-    
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-    }
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #404040;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #555555;
+            --accent-color: #4dabf7;
+            --success-color: #51cf66;
+            --danger-color: #ff6b6b;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
 
-    h1 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: 500 !important;
-    }
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
 
-    li {
-      background-color: #fff;
-      padding: 20px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: box-shadow 0.3s ease;
-    }
+        .theme-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
 
-    li:hover {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
 
-    .delete-btn {
-      cursor: pointer;
-      font-size: 18px;
-      color: #f44336;
-      transition: color 0.3s ease;
-    }
+        .navbar {
+            background-color: var(--bg-tertiary) !important;
+        }
 
-    .delete-btn:hover {
-      color: #d32f2f;
-    }
+        .navbar-dark .navbar-nav .nav-link {
+            color: var(--text-primary) !important;
+        }
 
-    .container {
-      padding: 20px !important;
-    }
+        .container {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 40px;
+        }
 
-    .navbar-nav .nav-item .nav-link {
-      color: #007bff;
-      font-weight: bold;
-    }
+        h1 {
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+            font-size: 2.5rem;
+        }
 
-    .navbar-nav .nav-item .nav-link i {
-      margin-right: 5px;
-      color: #007bff;
-    }
-  </style>
+        .projects-grid {
+        
+            margin-top: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-view {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: #0056b3;
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .delete-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                top: 70px;
+                right: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" id="home" href="/"><i class="fa fa-home"></i> Home</a>
-        <a class="nav-item nav-link" id="all" href="/all"><i class="fa fa-briefcase"></i> Projects</a>
-        <a class="nav-item nav-link" id="gantt" href="/gantt"><i class="fa fa-bar-chart"></i> GTC</a>
-        <a class="nav-item nav-link" id="pmt" href="/pmt"><i class="fa fa-tasks"></i> PMT</a>
-        <a class="nav-item nav-link" id="ppt" href="/ppt"><i class="fa fa-line-chart"></i> PPT</a>
-        <a class="nav-item nav-link" id="stock" href="/stock"><i class="fa fa-cubes"></i> MR</a>
-      </div>
-      <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link" id="logout" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
-      </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fa fa-moon-o" id="theme-icon"></i>
     </div>
-  </nav>
-  
-  <div class="container">
-   <em> <strong><center><h1 style= "padding:20px !important;"> PROJECTS</h1></center></strong></em>
-    <ul id="emailList">
-      {% for email in emails %}
-        <li>
-          <span>{{ email }}</span>
-          <span class="delete-btn" onclick="confirmDelete('{{ email }}')"><i class="fa fa-trash"></i>️</span>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  
-  <script>
-    function confirmDelete(email) {
-      const confirmation = confirm(`Are you sure you want to delete the email "${email}"?`);
-      if (confirmation) {
-        const userInput = prompt(`To confirm deletion, enter the ID:`);
-        if (userInput == '24') {
-          deleteEmail(email);
-        } else {
-          alert('ID does not match. Deletion canceled.');
-        }
-      }
-    }
 
-    function deleteEmail(email) {
-      fetch(`/delete/${encodeURIComponent(email)}`, {
-        method: 'DELETE'
-      })
-      .then(response => {
-        if (response.ok) {
-          const liToDelete = document.querySelector(`li:contains('${email}')`);
-          if (liToDelete) {
-            liToDelete.remove();
-          }
-          // Optionally, update UI or provide feedback
-          console.log(`Email "${email}" deleted successfully.`);
-          window.location.reload();
-        } else {
-          console.error('Failed to delete email:', response.status);
-          window.location.reload();
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/"><i class="fa fa-home"></i> Home</a>
+                <a class="nav-item nav-link" href="/all"><i class="fa fa-briefcase"></i> Projects</a>
+                <a class="nav-item nav-link" href="/gantt"><i class="fa fa-bar-chart"></i> GTC</a>
+                <a class="nav-item nav-link" href="/pmt"><i class="fa fa-tasks"></i> PMT</a>
+                <a class="nav-item nav-link" href="/ppt"><i class="fa fa-line-chart"></i> PPT</a>
+                <a class="nav-item nav-link" href="/stock"><i class="fa fa-cubes"></i> MR</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1><i class="fa fa-briefcase"></i> All Projects</h1>
+        
+        {% if emails %}
+        <div class="projects-grid">
+            {% for email in emails %}
+            <div class="project-card">
+                <div>
+                    <h5 class="project-name">{{ email }}</h5>
+                    <small class="text-muted">
+                        <i class="fa fa-calendar"></i> Created recently
+                    </small>
+                </div>
+                <div class="project-actions">
+                
+                    <button type="button" class="delete-btn" onclick="confirmDelete('{{ email }}')">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fa fa-folder-open"></i>
+            <h3>No Projects Found</h3>
+            <p>You haven't created any projects yet. Start by creating your first project!</p>
+            <a href="/sign-up" class="btn btn-primary mt-3">
+                <i class="fa fa-plus"></i> Create New Project
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fa fa-moon-o';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fa fa-sun-o';
+                localStorage.setItem('theme', 'dark');
+            }
         }
-      })
-      .catch(error => {
-        console.error('Error deleting email:', error);
-        window.location.reload();
-      });
-    }
-  </script>
-  
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7H/UibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"
-  ></script>
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fa fa-sun-o';
+            }
+        });
+
+        function confirmDelete(email) {
+            const confirmation = confirm(`Are you sure you want to delete the project "${email}"?`);
+            if (confirmation) {
+                const userInput = prompt(`To confirm deletion, enter the ID:`);
+                if (userInput == '24') {
+                    deleteEmail(email);
+                } else {
+                    alert('ID does not match. Deletion canceled.');
+                }
+            }
+        }
+
+        function deleteEmail(email) {
+            fetch(`/delete/${encodeURIComponent(email)}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log(`Project "${email}" deleted successfully.`);
+                    window.location.reload();
+                } else {
+                    console.error('Failed to delete project:', response.status);
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting project:', error);
+                window.location.reload();
+            });
+        }
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 # Assign role based on rid
-                if rid == '100':
+                if rid == '100@gmail.com':
                     user.rid = 'admin'
                 elif '@nadiya.in' in rid:
                     user.rid = 'team'
@@ -76,7 +76,7 @@ def sign_up():
         elif len(password1) < 1:
             flash('Password must be at least 7 characters.', category='error')
         elif rid != 'team':
-            return render_template('naah.html')
+            return render_template('naah.html', user =current_user)  # Render a different template for non-team users
         else:
             # Create a new user
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='scrypt'), rid=rid, p_type=project_type)

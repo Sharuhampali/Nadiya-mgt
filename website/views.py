@@ -16,20 +16,22 @@ def main():
     if current_user.rid == 'team':
         return render_template('home.html', email = email, user = user)
     else:
-         return render_template('no.html', email = email)
+         return render_template('no.html', email = email, user = user)
 
 
 
 @views.route('/gantt')
 @login_required
 def gantt():
-    return render_template('soon.html')
+    user = current_user
+    return render_template('soon.html', user=user)
 
 @views.route('/pmt')
 @login_required
 def index():
     # Check if an entry already exists for the current user
     existing_info = Info.query.filter_by(user_id=current_user.id).first()
+    user = current_user
 
     if not existing_info:
         new_info = Info(
@@ -52,7 +54,7 @@ def index():
     infos = Info.query.filter_by(user_id=current_user.id).all()
     email = current_user.email
 
-    return render_template('index.html', products=products,email = email, infos = infos)
+    return render_template('index.html', products=products,email = email, infos = infos, user=user)
 
 
 @views.route('/add_product', methods=['POST'])
@@ -228,8 +230,9 @@ def display():
 @views.route('/all', methods=['GET'])
 def all():
     try:
+        user = current_user
         emails = [user.email for user in User.query.all()]  # Fetch all emails from the database
-        return render_template('all.html', emails=emails)
+        return render_template('all.html', emails=emails, user=user)
     except Exception as e:
         return str(e)
 
@@ -251,20 +254,20 @@ def ppt():
 
     # Render the appropriate template based on user type
     if user_type == 'FAS1':
-        return render_template('FAS1.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('FAS1.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     elif user_type == 'FAS2':
-        return render_template('FAS1.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('FAS1.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     elif user_type == 'FAS+PA1':
-        return render_template('FAS+PA1.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('FAS+PA1.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     elif user_type == 'FAS+PA2':
-        return render_template('FAS+PA1.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('FAS+PA1.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     elif user_type == 'FAS+PA+TWTB1':
-        return render_template('ppt.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('ppt.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     elif user_type == 'FAS+PA+TWTB2':
-        return render_template('ppt.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('ppt.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
     else:
         # Default template or handle unexpected user types
-        return render_template('default.html', manday=manday, planned=planned, email=email, contact=contact)
+        return render_template('default.html', manday=manday, planned=planned, email=email, contact=contact, user=current_user)
 
 
 @views.route('/output')
@@ -733,7 +736,7 @@ def stock():
     products = Stock.query.filter_by(user_id=current_user.id).all()
     email = current_user.email
 
-    return render_template('stock.html', products=products,email = email)
+    return render_template('stock.html', products=products,email = email, user =current_user)
 
 
 @views.route('/add_stock', methods=['POST'])

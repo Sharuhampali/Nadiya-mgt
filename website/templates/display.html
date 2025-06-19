@@ -5,14 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECT MATERIAL TRACKER</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --header-bg: #f8f9fa;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --header-bg: #333333;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-button {
+            position: absolute;
+            top: 20px;
+            right: 120px;
+            z-index: 1000;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .print-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
         }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -21,36 +95,44 @@
             margin-top: 20px;
             flex-direction: column;
         }
-        .header h1,
-        .header h3 {
+
+        .header h1, .header h3 {
             margin: 0;
+            color: var(--text-color);
         }
-        h1 {
+
+        h1, h2, h3 {
             text-align: center;
+            color: var(--text-color);
         }
-       .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
 
-    border-top: 1px solid #ccc; /* subtle border */
-}
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--header-bg);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
 
-.contact-info {
-    margin-bottom: 10px;
-}
+        .contact-info {
+            margin-bottom: 10px;
+        }
 
-.left, .right {
-    flex: 1; /* equal width columns */
-}
+        .left, .right {
+            flex: 1;
+        }
 
-.left {
-    margin-right: 10px; /* space between left and right columns */
-}
+        .left {
+            margin-right: 10px;
+        }
 
         .footer p {
             margin: 10px 0;
+            color: var(--text-color);
         }
+
         .footer-bottom {
             display: flex;
             justify-content: space-between;
@@ -58,144 +140,259 @@
             margin-top: 10px;
         }
 
-
-
         .footer-bottom .regards {
-    font-size: 13px; /* Adjust the font size as needed */
-    text-align: center;
-
-
-}
-
+            font-size: 13px;
+            text-align: center;
+        }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
+
         th, td {
-            border: 2px solid;
-            padding: 8px;
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            text-align: center;
         }
+
         th {
-            background-color: #f2f2f2;
-            border: 2px solid;
+            background-color: var(--header-bg);
+            border: 2px solid var(--border-color);
+            font-weight: 600;
+            color: var(--text-color);
         }
+
         .summary-table {
             margin-top: 20px;
             margin-bottom: 20px;
             width: 100%;
         }
+
         .summary-table.approval {
-            border: 2px solid red;
+            border: 2px solid #dc3545;
         }
+
         .summary-table.approval .section-title th {
-            background-color: #dc3545; /* Red color */
+            background-color: #dc3545;
+            color: white;
         }
+
         .summary-table.order {
-            border: 2px solid blue;
+            border: 2px solid #007bff;
         }
+
         .summary-table.order .section-title th {
-            background-color: #007bff; /* Blue color */
+            background-color: #007bff;
+            color: white;
         }
+
         .summary-table.delivery {
-            border: 2px solid #c3b418; /* Greenish yellow color */
+            border: 2px solid #c3b418;
         }
+
         .summary-table.delivery .section-title th {
-            background-color: rgb(184, 189, 34); /* Greenish yellow color */
+            background-color: #c3b418;
+            color: white;
         }
+
         .progress {
-            height: 20px;
+            height: 25px;
             margin-bottom: 20px;
+            background-color: var(--header-bg);
+            border-radius: 12px;
+            overflow: hidden;
         }
+
         .progress-bar.bgred {
-            background-color: #dc3545 !important; /* Red color */
+            background-color: #dc3545 !important;
         }
+
         .progress-bar.bgblue {
-            background-color: #007bff !important; /* Blue color */
+            background-color: #007bff !important;
         }
+
         .progress-bar.bgyellow {
-            background-color: #c3b418 !important; /* Greenish yellow color */
+            background-color: #c3b418 !important;
         }
+
         .section-title {
-            background-color: #f2f2f2;
+            background-color: var(--header-bg);
             font-weight: bold;
         }
+
         .status-not-approved {
-            background-color: red;
+            background-color: #dc3545;
+            color: white;
         }
+
         .status-pending {
-            background-color: yellow;
+            background-color: #ffc107;
+            color: #212529;
         }
+
         .status-partiallypending {
-            background-color: orange;
+            background-color: #fd7e14;
+            color: white;
         }
+
         .status-done {
-            background-color: green;
+            background-color: #28a745;
+            color: white;
         }
+
         .status-delayed {
-            background-color: red;
+            background-color: #dc3545;
+            color: white;
         }
+
         .status-completed {
-            background-color: green;
+            background-color: #28a745;
+            color: white;
         }
+
         .status-other {
-            background-color: darkred;
+            background-color: #6f42c1;
+            color: white;
         }
+
         .right-align {
             text-align: right;
         }
+
         .right-align p {
             margin: 5px 0;
         }
+
         .right-align strong {
             font-weight: bold;
         }
-         .left-align {
+
+        .left-align {
             text-align: left;
         }
+
         .left-align p {
             margin: 5px 0;
         }
+
         .left-align strong {
             font-weight: bold;
         }
+
         .watermark {
             position: fixed;
             width: 100%;
             height: 100%;
-            background-image: url('{{ url_for("static", filename="logo.png") }}'); /* URL path to your logo image */
+            background-image: url('{{ url_for("static", filename="logo.png") }}');
             background-position: center;
-            background-repeat: no-repeat; /* Adjust based on how you want the watermark to repeat */
-            opacity: 0.3; /* Adjust the opacity as needed */
-            pointer-events: none; /* Ensure clicks and mouse events do not interact with the watermark */
-            z-index: -1; /* Place the watermark behind all other content */
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
         }
+
         .lines {
-            margin-top: 35px; /* Adjust spacing between header and lines */
+            margin-top: 35px;
         }
+
         .line {
-            height: 6px; /* Adjust height of the lines */
-            margin-bottom: 3px; /* Add space between each line */
+            height: 6px;
+            margin-bottom: 3px;
+            border-radius: 3px;
         }
+
         .line1 {
-            background: linear-gradient(to right, green, yellow, green);
+            background: linear-gradient(to right, #28a745, #ffc107, #28a745);
         }
+
         .line2 {
-            background: linear-gradient(to right, red, darkred);
+            background: linear-gradient(to right, #dc3545, #6f42c1);
         }
+
         .line3 {
-            background: linear-gradient(to right, darkblue, skyblue, darkblue);
+            background: linear-gradient(to right, #007bff, #17a2b8, #007bff);
         }
+
         .logo-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-header h3 {
+            color: var(--text-color);
+        }
+
+        @media print {
+            .theme-toggle, .print-button {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            
+            .container {
+                box-shadow: none !important;
+                margin-top: 0 !important;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin-top: 100px;
+            }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+            }
+            
+            .print-button {
+                top: 10px;
+                right: 80px;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+        <span id="theme-text">Dark</span>
+    </div>
+
+    <!-- Print Button -->
+    <button class="print-button" onclick="printReport()">
+        <i class="fas fa-print"></i>
+        <span>Print PDF</span>
+    </button>
+
     <div class="watermark"></div>
     <div class="container">
         <br><br>
@@ -214,22 +411,18 @@
             <h3></h3>
             <br><br>
         </div>
-        <div class = "right-align">
-                    <p><strong>REPORT DATE:</strong> {{ current_date }} &nbsp;&nbsp;</p>
-                </div>
-        <div class = "left-align">
-             <p><strong>CUSTOMER NAME:</strong> {{email}}</p>
-            {% if infos %}
-    <p><strong>LOCATION:</strong> {{ infos[-1].loc }}</p>
-    <p><strong>CUSTOMER PO No.:</strong> {{ infos[-1].po }}</p>
-    <p><strong>CUSTOMER PO Date:</strong> {{ infos[-1].pon }}</p>
-{% endif %}
-
-
-
+        <div class="right-align">
+            <p><strong>REPORT DATE:</strong> {{ current_date }} &nbsp;&nbsp;</p>
         </div>
-    <br>
-
+        <div class="left-align">
+            <p><strong>CUSTOMER NAME:</strong> {{email}}</p>
+            {% if infos %}
+                <p><strong>LOCATION:</strong> {{ infos[-1].loc }}</p>
+                <p><strong>CUSTOMER PO No.:</strong> {{ infos[-1].po }}</p>
+                <p><strong>CUSTOMER PO Date:</strong> {{ infos[-1].pon }}</p>
+            {% endif %}
+        </div>
+        <br>
 
         <!-- Approval Table -->
         <table class="summary-table approval">
@@ -303,7 +496,6 @@
         <h2>MATERIAL PROCUREMENT PROGRESS</h2>
         <br><br>
 
-
         <p>APPROVAL PROGRESS</p>
         <div class="progress">
             <div id="approvalProgress" class="progress-bar bgred" role="progressbar" style="width: {{ "{:.2f}".format((approved_tds / total_parts * 100) if total_parts else 0) }}%;" aria-valuenow="{{ "{:.2f}".format((approved_tds / total_parts * 100) if total_parts else 0) }}" aria-valuemin="0" aria-valuemax="100">{{ "{:.2f}".format((approved_tds / total_parts * 100) if total_parts else 0) }}%</div>
@@ -319,86 +511,172 @@
             <div id="deliveryProgress" class="progress-bar bgyellow" role="progressbar" style="width: {{ "{:.2f}".format((completed_deliveries / total_parts * 100) if total_parts else 0) }}%;" aria-valuenow="{{ "{:.2f}".format((completed_deliveries / total_parts * 100) if total_parts else 0) }}" aria-valuemin="0" aria-valuemax="100">{{ "{:.2f}".format((completed_deliveries / total_parts * 100) if total_parts else 0) }}%</div>
         </div>
 
-
         <br><br><br> <hr><br><br><br><br>
         <h3>PENDING MATERIAL REMARKS</h3>
-<br><br>
-<table class="summary-table">
-    <thead>
-        <tr>
-            <th>SL. No.</th>
-            <th>Product Name</th>
-            <th>Approval Status</th>
-            <th>Order Status</th>
-            <th>Delivery Status</th>
-            <th>Remarks</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for product in pr %}
-         {% if product.delivery_status != 'completed' %}
+        <br><br>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>SL. No.</th>
+                    <th>Product Name</th>
+                    <th>Approval Status</th>
+                    <th>Order Status</th>
+                    <th>Delivery Status</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in pr %}
+                {% if product.delivery_status != 'completed' %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ product.part_no }}</td>
+                    <td class="{% if product.approved_not_approved == 'notApproved' %}status-not-approved{% elif product.approved_not_approved == 'pending' %}status-pending{% else %}status-done{% endif %}">{{ product.approved_not_approved }}</td>
+                    <td class="{% if product.order_status == 'cancelled' %}status-not-approved{% elif product.order_status == 'pending' %}status-pending{% else %}status-done{% endif %}">{{ product.order_status }}</td>
+                    <td class="{% if product.delivery_status == 'delayed' %}status-delayed{% elif product.delivery_status == 'pending' %}status-pending{% elif product.delivery_status == 'completed' %}status-completed{% elif product.delivery_status == 'partiallypending' %}status-partiallypending{% else %}status-other{% endif %}">{{ product.delivery_status.replace('partiallypending', 'partially pending')}}</td>
+                    <td>{{ product.remarks }}</td>
+                </tr>
+                {%endif%}
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br>
 
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ product.part_no }}</td>
-            <td class="{% if product.approved_not_approved == 'notApproved' %}status-not-approved{% elif product.approved_not_approved == 'pending' %}status-pending{% else %}status-done{% endif %}">{{ product.approved_not_approved }}</td>
-            <td class="{% if product.order_status == 'cancelled' %}status-not-approved{% elif product.order_status == 'pending' %}status-pending{% else %}status-done{% endif %}">{{ product.order_status }}</td>
-            <td class="{% if product.delivery_status == 'delayed' %}status-delayed{% elif product.delivery_status == 'pending' %}status-pending{% elif product.delivery_status == 'completed' %}status-completed{% elif product.delivery_status == 'partiallypending' %}status-partiallypending{% else %}status-other{% endif %}">{{ product.delivery_status.replace('partiallypending', 'partially pending')}}</td>
-            <td>{{ product.remarks }}</td>
-        </tr>
-        {%endif%}
-
-    {% endfor %}
-
-    </tbody>
-</table>
-<br><br>
-
-
-            <h6>For any queries Contact:</h6>
-       <div class="footer">
-    <div class="left">
-        <div class="contact-info">
-            <p>For Order and Delivery Status: </p>
-            <p>Sumana S.</p>
-            <p><i class="fa fa-envelope"></i> <a href="mailto:sumana@nadiya.in">sumana@nadiya.in</a></p>
-            <p><i class="fa fa-phone"></i> 9742223661</p>
-        </div>
-    </div>
-    <div class="right">
-        <div class="contact-info">
-            <p> For Approval Status: </p>
-            <p>Sneha H. T.</p>
-            <p><i class="fa fa-envelope"></i> <a href="mailto:customerservice@nadiya.in">customerservice@nadiya.in</a></p>
-            <p><i class="fa fa-phone"></i> 7760213765</p>
-        </div>
-    </div>
-
-
+        <h6>For any queries Contact:</h6>
+        <div class="footer">
+            <div class="left">
+                <div class="contact-info">
+                    <p>For Order and Delivery Status: </p>
+                    <p>Sumana S.</p>
+                    <p><i class="fa fa-envelope"></i> <a href="mailto:sumana@nadiya.in">sumana@nadiya.in</a></p>
+                    <p><i class="fa fa-phone"></i> 9742223661</p>
+                </div>
+            </div>
+            <div class="right">
+                <div class="contact-info">
+                    <p> For Approval Status: </p>
+                    <p>Sneha H. T.</p>
+                    <p><i class="fa fa-envelope"></i> <a href="mailto:customerservice@nadiya.in">customerservice@nadiya.in</a></p>
+                    <p><i class="fa fa-phone"></i> 7760213765</p>
+                </div>
+            </div>
         </div>
         <div class="lines">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
-        <div class="line line3"></div>
-    </div>
-      <div class="footer-bottom">
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+        </div>
+        <div class="footer-bottom">
             <div class="left">
-
-                 <div class="regards">
-
-                   <center>#372/A, 2nd Floor, New No. 7, 50ft Main Road,
+                <div class="regards">
+                    <center>#372/A, 2nd Floor, New No. 7, 50ft Main Road,
                     Banashankari 1st Stage, Bangalore – 560019 Ph: 080 26628080 |
-                    Web : www.nadiya.in<br></p></center>
+                    Web : www.nadiya.in<br></center>
                     <p><center><strong> GST: 29AAECN7940D1ZC  |  CIN: U74900KA2014PTC077481</strong></center></p>
                 </div>
-                </div>
-    <br><br>
+            </div>
+            <br><br>
+        </div>
     </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        // Theme Management
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (newTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (savedTheme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Print to PDF function
+        function printReport() {
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: 0.4,
+                filename: 'project-material-tracker.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            const originalTheme = document.documentElement.getAttribute('data-theme');
+
+            // Force light mode
+            document.documentElement.setAttribute('data-theme', 'light');
+
+
+            // Temporarily hide theme toggle and print button
+            const themeToggle = document.querySelector('.theme-toggle');
+            const printButton = document.querySelector('.print-button');
+
+           
+            
+            themeToggle.style.display = 'none';
+            printButton.style.display = 'none';
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore buttons after PDF generation
+                document.documentElement.setAttribute('data-theme', originalTheme);
+                themeToggle.style.display = 'flex';
+                printButton.style.display = 'flex';
+            });
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', initTheme);
+
+
+    </script>
+    <script>
+    function printContainerOnly() {
+        // Add print class
+        document.body.classList.add('print-mode');
+
+        // Wait briefly to allow styles to apply
+        setTimeout(() => {
+            window.print();
+
+            // Cleanup after printing
+            setTimeout(() => {
+                document.body.classList.remove('print-mode');
+            }, 1000);
+        }, 250);
+    }
+</script>
+
 </body>
 </html>

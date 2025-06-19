@@ -3,25 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> MATERIAL REQUISITION TRACKER</title>
+    <title>MATERIAL REQUISITION TRACKER</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --header-bg: #f8f9fa;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --table-stripe: #f9f9f9;
+        }
 
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --header-bg: #333333;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --table-stripe: #363636;
+        }
 
-        .header h1,
-        .header h3 {
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
-        h1 {
-            text-align: center;
+
+        .theme-toggle {
+            position: fixed;
+            color: var(--text-color);
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
         }
-       .container {
+
+        .print-btn {
+            position: absolute;
+            top: 20px;
+            right: 140px;
+            z-index: 1000;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .print-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-top: 60px;
         }
+
+        h1, h2, h3, h6 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -30,183 +108,223 @@
             margin-top: 20px;
             flex-direction: column;
         }
-        .header h1,
-        .header h3 {
-            margin: 0;
-        }
-        h1 {
-            text-align: center;
-        }
-       .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
 
-    border-top: 1px solid #ccc; /* subtle border */
-}
-
-.contact-info {
-    margin-bottom: 10px;
-}
-
-.left, .right {
-    flex: 1; /* equal width columns */
-}
-
-.left {
-    margin-right: 10px; /* space between left and right columns */
-}
-
-        .footer p {
-            margin: 10px 0;
-        }
-        .footer-bottom {
+        .logo-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
+        .lines {
+            margin: 20px 0;
+        }
 
+        .line {
+            height: 6px;
+            margin-bottom: 3px;
+            border-radius: 3px;
+        }
 
-        .footer-bottom .regards {
-    font-size: 13px; /* Adjust the font size as needed */
-    text-align: center;
+        .line1 {
+            background: linear-gradient(to right, #28a745, #ffc107, #28a745);
+        }
 
+        .line2 {
+            background: linear-gradient(to right, #dc3545, #8b0000);
+        }
 
-}
-
+        .line3 {
+            background: linear-gradient(to right, #007bff, #87ceeb, #007bff);
+        }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             margin-bottom: 20px;
-            border: 2px solid black;
-            overflow-x: auto; /* Ensure horizontal scroll when needed */
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
+
         th, td {
-            border: 2px solid black; /* Ensure all table cells have a black border */
-            padding: 8px;
+            border: 2px solid var(--border-color);
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
         }
+
         th {
-            background-color: #f2f2f2;
-            border: 2px solid black; /* Ensure table headers have a black border */
+            background-color: var(--header-bg);
+            font-weight: 600;
+            color: var(--text-color);
         }
-        tr {
-            border: 2px solid black; /* Ensure table rows have a black border */
+
+        tr:nth-child(even) {
+            background-color: var(--table-stripe);
         }
+
         .right-align {
             text-align: right;
         }
+
         .left-align {
             text-align: left;
         }
-        .justify-text {
-            text-align: justify;
-        }
-        .right-align p {
+
+        .right-align p, .left-align p {
             margin: 5px 0;
         }
-        .right-align strong {
-            font-weight: bold;
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 2px solid var(--border-color);
+            margin-top: 40px;
         }
-         .watermark {
+
+        .contact-info {
+            margin-bottom: 10px;
+        }
+
+        .left, .right {
+            flex: 1;
+        }
+
+        .left {
+            margin-right: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+            color: white;
+        }
+
+        .text-dark {
+            color: #212529 !important;
+        }
+
+        .text-white {
+            color: white !important;
+        }
+
+        .watermark {
             position: fixed;
             width: 100%;
             height: 100%;
-            background-image: url('{{ url_for("static", filename="logo.png") }}'); /* URL path to your logo image */
+            background-image: url('/static/logo.png');
             background-position: center;
-            background-repeat: no-repeat; /* Adjust based on how you want the watermark to repeat */
-            opacity: 0.3; /* Adjust the opacity as needed */
-            pointer-events: none; /* Ensure clicks and mouse events do not interact with the watermark */
-            z-index: -1; /* Place the watermark behind all other content */
-        }
-        .lines {
-            margin-top: 35px; /* Adjust spacing between header and lines */
-        }
-        .line {
-            height: 6px; /* Adjust height of the lines */
-            margin-bottom: 3px; /* Add space between each line */
-        }
-        .line1 {
-            background: linear-gradient(to right, green, yellow, green);
-        }
-        .line2 {
-            background: linear-gradient(to right, red, darkred);
-        }
-        .line3 {
-            background: linear-gradient(to right, darkblue, skyblue, darkblue);
-        }
-        .logo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
         }
 
-   @media only screen and (max-width: 768px) {
-        .container {
-            padding: 10px; /* Adjust padding for smaller screens */
+        @media print {
+            .theme-toggle, .print-btn {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .container {
+                box-shadow: none !important;
+                margin-top: 0 !important;
+            }
         }
-        .header h1 {
-            font-size: 24px; /* Adjust font size for smaller screens */
-        }
-        .footer .regards p {
-            font-size: 10px; /* Adjust font size for smaller screens */
-        }
-        .footer .contact-info p {
-            font-size: 10px; /* Adjust font size for smaller screens */
-        }
-        .table-responsive {
-            overflow-x: auto; /* Ensure horizontal scroll for tables on smaller screens */
-        }
-    }
 
-    @media only screen and (max-width: 576px) {
-        .header h1 {
-            font-size: 20px; /* Further adjust font size for very small screens */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin-top: 80px;
+            }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .print-btn {
+                top: 10px;
+                right: 120px;
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
         }
-        .footer .regards p {
-            font-size: 8px; /* Further adjust font size for very small screens */
-        }
-        .footer .contact-info p {
-            font-size: 8px; /* Further adjust font size for very small screens */
-        }
-    }
     </style>
 </head>
 <body>
     <div class="watermark"></div>
-    <div class="container">
-        <br><br>
+    
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fa fa-moon-o" id="theme-icon"></i>
+        <span id="theme-text">Dark</span>
+    </button>
+    
+    <button class="print-btn" onclick="generatePDF()">
+        <i class="fa fa-file-pdf-o"></i>
+        <span>Export PDF</span>
+    </button>
+
+    <div class="container" id="report-content">
         <div class="logo-header">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="100">
             <h3><strong>Nadiya Technology Solutions Pvt Ltd</strong></h3>
         </div>
+        
         <div class="lines">
             <div class="line line1"></div>
             <div class="line line2"></div>
             <div class="line line3"></div>
         </div>
+        
         <div class="header">
             <h1>MATERIAL REQUISITION</h1>
-            <h2></h2>
-            <h3></h3>
-            <br><br>
         </div>
+        
         <div class="right-align">
-            <p><strong>REPORT DATE:</strong> {{ current_date }} &nbsp;&nbsp;</p>
+            <p><strong>REPORT DATE:</strong> {{ current_date }}</p>
         </div>
-        <div class = "left-align">
-        <p><strong>CUSTOMER NAME:</strong> {{current_user.email}} &nbsp;&nbsp;</p>
-        {% if infos %}
-            <p><strong>LOCATION:</strong> {{infos[-1].loc}} &nbsp;&nbsp;</p>
-        {% endif %}
-        {% if contact %}
-            <p><strong>SITE INCHARGE:</strong> {{contact[-1].name1}} &nbsp;&nbsp;</p>
-        {% endif %}
+        
+        <div class="left-align">
+            <p><strong>CUSTOMER NAME:</strong> {{current_user.email}}</p>
+            {% if infos %}
+                <p><strong>LOCATION:</strong> {{infos[-1].loc}}</p>
+            {% endif %}
+            {% if contact %}
+                <p><strong>SITE INCHARGE:</strong> {{contact[-1].name1}}</p>
+            {% endif %}
         </div>
-        <div class = "table-responsive">
+        
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
@@ -228,7 +346,7 @@
                 <tbody>
                     {% for product in stonks %}
                         {% if product.item %}
-                            <tr data-product-id="{{ product.id }}"{% if not product.date2 %}bg-warning{% else %}bg-success{% endif %}>
+                            <tr data-product-id="{{ product.id }}">
                                 <td>{{ loop.index }}</td>
                                 <td>{{ product.menu }}</td>
                                 <td>{{ product.item }}</td>
@@ -240,62 +358,111 @@
                                 <td>{{ product.date1 }}</td>
                                 <td>{{ product.remarks1 }}</td>
                                 <td>{{ product.date2 }}</td>
-                                 <td class="{% if not product.date2 %}bg-warning text-dark{% else %}bg-success text-white{% endif %}">
-    {% if not product.date2 %}
-        Pending
-    {% else %}
-        Delivered
-    {% endif %}
-</td>
+                                <td class="{% if not product.date2 %}bg-warning text-dark{% else %}bg-success text-white{% endif %}">
+                                    {% if not product.date2 %}
+                                        Pending
+                                    {% else %}
+                                        Delivered
+                                    {% endif %}
+                                </td>
                                 <td>{{ product.remarks2 }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
-        </div><br><br>
-              <h6>For any queries Contact:</h6>
-       <div class="footer">
-    <div class="left">
-        <div class="contact-info">
-
-            <p>Sumana S.</p>
-            <p><i class="fa fa-envelope"></i> <a href="mailto:sumana@nadiya.in">sumana@nadiya.in</a></p>
-            <p><i class="fa fa-phone"></i> 9742223661</p>
         </div>
-    </div>
-    <div class="right">
-        <div class="contact-info">
 
-            <p>Sneha H. T.</p>
-            <p><i class="fa fa-envelope"></i> <a href="mailto:customerservice@nadiya.in">customerservice@nadiya.in</a></p>
-            <p><i class="fa fa-phone"></i> 7760213765</p>
-        </div>
-    </div>
-
-        </div>
-        <div class="lines">
-        <div class="line line1"></div>
-        <div class="line line2"></div>
-        <div class="line line3"></div>
-    </div>
-      <div class="footer-bottom">
+        <h6>For any queries Contact:</h6>
+        <div class="footer">
             <div class="left">
-
-                 <div class="regards">
-
-                   <center>&nbsp;&nbsp;#372/A, 2nd Floor, New No. 7, 50ft Main Road,
-                    Banashankari 1st Stage, Bangalore – 560019 Ph: 080 26628080 |
-                    Web : www.nadiya.in<br></p></center>
-                    <p><center><strong> GST: 29AAECN7940D1ZC  |  CIN: U74900KA2014PTC077481</strong></center></p>
+                <div class="contact-info">
+                    <p><strong>For Order and Delivery Status:</strong></p>
+                    <p>Sumana S.</p>
+                    <p><i class="fa fa-envelope"></i> <a href="mailto:sumana@nadiya.in">sumana@nadiya.in</a></p>
+                    <p><i class="fa fa-phone"></i> 9742223661</p>
                 </div>
+            </div>
+            <div class="right">
+                <div class="contact-info">
+                    <p><strong>For Approval Status:</strong></p>
+                    <p>Sneha H. T.</p>
+                    <p><i class="fa fa-envelope"></i> <a href="mailto:customerservice@nadiya.in">customerservice@nadiya.in</a></p>
+                    <p><i class="fa fa-phone"></i> 7760213765</p>
                 </div>
-    <br><br>
+            </div>
+        </div>
+        
+        <div class="lines">
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>#372/A, 2nd Floor, New No. 7, 50ft Main Road, Banashankari 1st Stage, Bangalore – 560019 Ph: 080 26628080 | Web: www.nadiya.in</p>
+            <p><strong>GST: 29AAECN7940D1ZC | CIN: U74900KA2014PTC077481</strong></p>
+        </div>
     </div>
 
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fa fa-moon-o';
+                themeText.textContent = 'Dark';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fa fa-sun-o';
+                themeText.textContent = 'Light';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa fa-sun-o';
+                document.getElementById('theme-text').textContent = 'Light';
+            }
+        });
+
+        // PDF generation
+        function generatePDF() {
+            const element = document.getElementById('report-content');
+            const opt = {
+                margin: 0.5,
+                filename: 'material-requisition-tracker.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+            };
+            const originalTheme = document.body.getAttribute('data-theme');
+
+            // Force light mode
+            document.body.removeAttribute('data-theme');
+
+
+
+            // Hide controls during PDF generation
+            document.querySelector('.theme-toggle').style.display = 'none';
+            document.querySelector('.print-btn').style.display = 'none';
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Show controls after PDF generation
+                document.body.setAttribute('data-theme', originalTheme);
+                document.querySelector('.theme-toggle').style.display = 'flex';
+                document.querySelector('.print-btn').style.display = 'flex';
+            });
+        }
+    </script>
 </body>
 </html>
